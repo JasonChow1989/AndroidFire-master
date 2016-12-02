@@ -18,7 +18,8 @@ import com.jaydenxiao.common.base.BaseActivity;
 
 import butterknife.Bind;
 
-public class NewsBrowserActivity extends BaseActivity {
+public class NewsBrowserActivity extends BaseActivity
+{
 
 
     @Bind(R.id.toolbar)
@@ -28,33 +29,41 @@ public class NewsBrowserActivity extends BaseActivity {
     @Bind(R.id.web_view)
     WebView webView;
 
-    public static void startAction(Context context ,String link,String title){
+    public static void startAction(Context context, String link, String title)
+    {
         Intent intent = new Intent(context, NewsBrowserActivity.class);
-        intent.putExtra(AppConstant.NEWS_LINK,link);
-        intent.putExtra(AppConstant.NEWS_TITLE,title);
+        intent.putExtra(AppConstant.NEWS_LINK, link);
+        intent.putExtra(AppConstant.NEWS_TITLE, title);
         context.startActivity(intent);
     }
+
     @Override
-    public int getLayoutId() {
+    public int getLayoutId()
+    {
         return R.layout.act_news_browser;
     }
 
     @Override
-    public void initPresenter() {
+    public void initPresenter()
+    {
 
     }
+
     @Override
-    public void initView() {
+    public void initView()
+    {
         initWebView();
     }
 
 
-    private void initWebView() {
+    private void initWebView()
+    {
         setWebViewSettings();
         setWebView();
     }
 
-    private void setWebViewSettings() {
+    private void setWebViewSettings()
+    {
         WebSettings webSettings = webView.getSettings();
         // 打开页面时， 自适应屏幕
         webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
@@ -62,28 +71,35 @@ public class NewsBrowserActivity extends BaseActivity {
         // 便页面支持缩放
         webSettings.setJavaScriptEnabled(true); //支持js
         webSettings.setSupportZoom(true); //支持缩放
-//        webSettings.setBuiltInZoomControls(true); // 放大和缩小的按钮，容易引发异常 http://blog.csdn.net/dreamer0924/article/details/34082687
+//      webSettings.setBuiltInZoomControls(true); // 放大和缩小的按钮，容易引发异常 http://blog.csdn.net/dreamer0924/article/details/34082687
 
         webSettings.setAppCacheEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
     }
 
-    private void setWebView() {
+    private void setWebView()
+    {
         webView.loadUrl(getIntent().getStringExtra(AppConstant.NEWS_LINK));
-        webView.setWebViewClient(new WebViewClient() {
+        webView.setWebViewClient(new WebViewClient()
+        {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            public boolean shouldOverrideUrlLoading(WebView view, String url)
+            {
                 if (url != null) view.loadUrl(url);
                 return true;
             }
         });
-        webView.setWebChromeClient(new WebChromeClient() {
+        webView.setWebChromeClient(new WebChromeClient()
+        {
             @Override
-            public void onProgressChanged(WebView view, int newProgress) {
+            public void onProgressChanged(WebView view, int newProgress)
+            {
                 super.onProgressChanged(view, newProgress);
-                if (newProgress == 100) {
+                if (newProgress == 100)
+                {
                     progressBar.setVisibility(View.GONE);
-                } else {
+                } else
+                {
                     progressBar.setVisibility(View.VISIBLE);
                     progressBar.setProgress(newProgress);
                 }
@@ -92,8 +108,10 @@ public class NewsBrowserActivity extends BaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        if(webView!=null) {
+    protected void onDestroy()
+    {
+        if (webView != null)
+        {
             webView.removeAllViews();
             webView.destroy();
         }

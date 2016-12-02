@@ -32,9 +32,8 @@ import butterknife.OnClick;
  * Created by xsf
  * on 2016.09.16:45
  */
-public class NewsMainFragment extends BaseFragment<NewsMainPresenter,NewsMainModel>implements NewsMainContract.View {
-
-
+public class NewsMainFragment extends BaseFragment<NewsMainPresenter, NewsMainModel> implements NewsMainContract.View
+{
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.tabs)
@@ -48,44 +47,56 @@ public class NewsMainFragment extends BaseFragment<NewsMainPresenter,NewsMainMod
     private BaseFragmentAdapter fragmentAdapter;
 
     @Override
-    protected int getLayoutResource() {
+    protected int getLayoutResource()
+    {
         return R.layout.app_bar_news;
     }
 
     @Override
-    public void initPresenter() {
-      mPresenter.setVM(this,mModel);
+    public void initPresenter()
+    {
+        mPresenter.setVM(this, mModel);
     }
 
     @Override
-    public void initView() {
+    public void initView()
+    {
         mPresenter.lodeMineChannelsRequest();
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 mRxManager.post(AppConstant.NEWS_LIST_TO_TOP, "");
             }
         });
     }
+
     @OnClick(R.id.add_channel_iv)
-    public void clickAdd(){
+    public void clickAdd()
+    {
         NewsChannelActivity.startAction(getContext());
     }
 
     @Override
-    public void returnMineNewsChannels(List<NewsChannelTable> newsChannelsMine) {
-        if(newsChannelsMine!=null) {
+    public void returnMineNewsChannels(List<NewsChannelTable> newsChannelsMine)
+    {
+        if (newsChannelsMine != null)
+        {
             List<String> channelNames = new ArrayList<>();
             List<Fragment> mNewsFragmentList = new ArrayList<>();
-            for (int i = 0; i < newsChannelsMine.size(); i++) {
+            for (int i = 0; i < newsChannelsMine.size(); i++)
+            {
                 channelNames.add(newsChannelsMine.get(i).getNewsChannelName());
                 mNewsFragmentList.add(createListFragments(newsChannelsMine.get(i)));
             }
-            if(fragmentAdapter==null) {
+            if (fragmentAdapter == null)
+            {
                 fragmentAdapter = new BaseFragmentAdapter(getChildFragmentManager(), mNewsFragmentList, channelNames);
-            }else{
+            } else
+            {
                 //刷新fragment
-                fragmentAdapter.setFragments(getChildFragmentManager(),mNewsFragmentList,channelNames);
+                fragmentAdapter.setFragments(getChildFragmentManager(), mNewsFragmentList, channelNames);
             }
             viewPager.setAdapter(fragmentAdapter);
             tabs.setupWithViewPager(viewPager);
@@ -94,25 +105,31 @@ public class NewsMainFragment extends BaseFragment<NewsMainPresenter,NewsMainMod
         }
     }
 
-    private void setPageChangeListener() {
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+    private void setPageChangeListener()
+    {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener()
+        {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+            {
 
             }
 
             @Override
-            public void onPageSelected(int position) {
+            public void onPageSelected(int position)
+            {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
+            public void onPageScrollStateChanged(int state)
+            {
 
             }
         });
     }
 
-    private NewsFrament createListFragments(NewsChannelTable newsChannel) {
+    private NewsFrament createListFragments(NewsChannelTable newsChannel)
+    {
         NewsFrament fragment = new NewsFrament();
         Bundle bundle = new Bundle();
         bundle.putString(AppConstant.NEWS_ID, newsChannel.getNewsChannelId());
@@ -123,17 +140,20 @@ public class NewsMainFragment extends BaseFragment<NewsMainPresenter,NewsMainMod
     }
 
     @Override
-    public void showLoading(String title) {
+    public void showLoading(String title)
+    {
 
     }
 
     @Override
-    public void stopLoading() {
+    public void stopLoading()
+    {
 
     }
 
     @Override
-    public void showErrorTip(String msg) {
+    public void showErrorTip(String msg)
+    {
 
     }
 }

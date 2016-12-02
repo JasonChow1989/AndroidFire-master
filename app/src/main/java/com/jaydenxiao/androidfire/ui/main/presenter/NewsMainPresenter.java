@@ -41,7 +41,6 @@ public class NewsMainPresenter extends NewsMainContract.Presenter{
 
             @Override
             protected void _onError(String message) {
-
             }
         }));
     }
