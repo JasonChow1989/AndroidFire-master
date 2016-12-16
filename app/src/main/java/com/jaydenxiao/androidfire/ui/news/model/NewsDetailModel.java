@@ -32,6 +32,7 @@ public class NewsDetailModel implements NewsDetailContract.Model {
                 })
                 .compose(RxSchedulers.<NewsDetail>io_main());
     }
+
     private void changeNewsDetail(NewsDetail newsDetail) {
         List<NewsDetail.ImgBean> imgSrcs = newsDetail.getImg();
         if (isChange(imgSrcs)) {

@@ -19,9 +19,8 @@ import java.util.ArrayList;
 /**
  * Created by Weavey on 2016/9/4.
  */
-public class MDSelectionDialog {
-
-
+public class MDSelectionDialog
+{
     private static Context mContext;
     private Dialog mDialog;
     private View dialogView;
@@ -31,7 +30,8 @@ public class MDSelectionDialog {
     private ArrayList<String> datas;
     private int selectPosition;//最后一次选择的位置
 
-    public MDSelectionDialog(Builder builder) {
+    public MDSelectionDialog(Builder builder)
+    {
 
         this.mBuilder = builder;
         mDialog = new Dialog(mContext, R.style.MyDialogStyle);
@@ -46,32 +46,33 @@ public class MDSelectionDialog {
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dialogWindow.setAttributes(lp);
         mDialog.setCanceledOnTouchOutside(builder.isTouchOutside());
-
-
     }
 
     //根据数据生成item
-    private void loadItem() {
-
-
+    private void loadItem()
+    {
         //设置数据item
-        if (datas.size() == 1) {
-
+        if (datas.size() == 1)
+        {
             Button button = getButton(datas.get(0), 0);
             button.setBackgroundResource(R.drawable.selector_widget_md_single);
             linearLayout.addView(button);
+        } else if (datas.size() > 1)
+        {
 
-        } else if (datas.size() > 1) {
-
-            for (int i = 0; i < datas.size(); i++) {
+            for (int i = 0; i < datas.size(); i++)
+            {
 
                 Button button = getButton(datas.get(i), i);
-                if (i == 0) {
+                if (i == 0)
+                {
                     button.setBackgroundResource(R.drawable.selector_widget_md_top);
-                } else if (i > 0 && i != datas.size() - 1) {
+                } else if (i > 0 && i != datas.size() - 1)
+                {
                     button.setBackgroundResource(R.drawable.selector_widget_md_middle);
 
-                } else {
+                } else
+                {
                     button.setBackgroundResource(R.drawable.selector_widget_md_bottom);
                 }
                 linearLayout.addView(button);
@@ -81,8 +82,8 @@ public class MDSelectionDialog {
 
     }
 
-    private Button getButton(String text, int position) {
-
+    private Button getButton(String text, int position)
+    {
         // 动态生成选择按钮
         final Button button = new Button(mContext);
         button.setText(text);
@@ -92,18 +93,18 @@ public class MDSelectionDialog {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams
                 .MATCH_PARENT, mBuilder.getItemHeight());
         button.setLayoutParams(lp);
-        button.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
-        button.setPadding(UiUtils.dp2px(mContext,10),0,UiUtils.dp2px(mContext,10),0);
-        button.setOnClickListener(new View.OnClickListener() {
+        button.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+        button.setPadding(UiUtils.dp2px(mContext, 10), 0, UiUtils.dp2px(mContext, 10), 0);
+        button.setOnClickListener(new View.OnClickListener()
+        {
 
             @Override
-            public void onClick(View arg0) {
-
-                if (mBuilder.getOnItemListener() != null) {
-
+            public void onClick(View arg0)
+            {
+                if (mBuilder.getOnItemListener() != null)
+                {
                     selectPosition = Integer.parseInt(button.getTag().toString());
                     mBuilder.getOnItemListener().onItemClick(button, selectPosition);
-
                 }
             }
         });
@@ -111,26 +112,25 @@ public class MDSelectionDialog {
         return button;
     }
 
-    public void setDataList(ArrayList<String> datas) {
-
+    public void setDataList(ArrayList<String> datas)
+    {
         linearLayout.removeAllViews();
         this.datas = (datas == null ? new ArrayList<String>() : datas);
         loadItem();
     }
 
-    public void show() {
-
+    public void show()
+    {
         mDialog.show();
-
     }
 
-    public void dismiss() {
-
+    public void dismiss()
+    {
         mDialog.dismiss();
     }
 
-    public static class Builder {
-
+    public static class Builder
+    {
         //item属性
         private DialogOnItemClickListener onItemListener;
         private int itemHeight;
@@ -139,7 +139,8 @@ public class MDSelectionDialog {
         private float itemTextSize;
         private boolean isTouchOutside;
 
-        public Builder(Context context) {
+        public Builder(Context context)
+        {
 
             mContext = context;
             onItemListener = null;
@@ -152,64 +153,77 @@ public class MDSelectionDialog {
         }
 
 
-        public DialogOnItemClickListener getOnItemListener() {
+        public DialogOnItemClickListener getOnItemListener()
+        {
             return onItemListener;
         }
 
-        public Builder setOnItemListener(DialogOnItemClickListener onItemListener) {
+        public Builder setOnItemListener(DialogOnItemClickListener onItemListener)
+        {
             this.onItemListener = onItemListener;
             return this;
         }
 
-        public int getItemHeight() {
+        public int getItemHeight()
+        {
             return itemHeight;
         }
 
-        public Builder setItemHeight(int dp) {
+        public Builder setItemHeight(int dp)
+        {
             this.itemHeight = UiUtils.dp2px(mContext, dp);
             return this;
         }
 
-        public float getItemWidth() {
+        public float getItemWidth()
+        {
             return itemWidth;
         }
 
-        public Builder setItemWidth(float itemWidth) {
+        public Builder setItemWidth(float itemWidth)
+        {
             this.itemWidth = itemWidth;
             return this;
         }
 
-        public int getItemTextColor() {
+        public int getItemTextColor()
+        {
 
             return itemTextColor;
         }
 
-        public Builder setItemTextColor(@ColorRes int itemTextColor) {
+        public Builder setItemTextColor(@ColorRes int itemTextColor)
+        {
 
             this.itemTextColor = ContextCompat.getColor(mContext, itemTextColor);
             return this;
         }
 
-        public float getItemTextSize() {
+        public float getItemTextSize()
+        {
             return itemTextSize;
         }
 
-        public Builder setItemTextSize(int sp) {
+        public Builder setItemTextSize(int sp)
+        {
             this.itemTextSize = sp;
             return this;
         }
 
-        public boolean isTouchOutside() {
+        public boolean isTouchOutside()
+        {
             return isTouchOutside;
         }
 
-        public Builder setCanceledOnTouchOutside(boolean isTouchOutside) {
+        public Builder setCanceledOnTouchOutside(boolean isTouchOutside)
+        {
 
             this.isTouchOutside = isTouchOutside;
             return this;
         }
 
-        public MDSelectionDialog build() {
+        public MDSelectionDialog build()
+        {
 
             return new MDSelectionDialog(this);
         }

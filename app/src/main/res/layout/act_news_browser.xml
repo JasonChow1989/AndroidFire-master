@@ -6,7 +6,8 @@
               android:layout_height="match_parent"
               android:clipToPadding="true"
               android:fitsSystemWindows="true"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:clickable="false">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
